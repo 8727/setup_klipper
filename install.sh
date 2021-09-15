@@ -68,8 +68,8 @@ install_telegram_bot(){
 }
 
 
-sudo create_klipper_user
-sudo update_udev
+create_klipper_user
+update_udev
 read -p "download kiauh(y/N):" yn
 while true; do
   case "$yn" in
@@ -81,7 +81,7 @@ while true; do
   esac
   done
 
-read -p "Install Telegram Bot kiauh(y/N):" yn
+read -p "Install Telegram Bot (y/N):" yn
 while true; do
   case "$yn" in
   Y|y|Yes|yes)
@@ -93,4 +93,4 @@ while true; do
   done
 
 sudo sh /home/klipper/moonraker/scripts/sudo_fix.sh
-echo "0 05 * * * /home/${NEWUSER}/backup_email.sh" | crontab -e
+echo -e '0 05 * * * /home/klipper/setup_klipper/backup_email.sh' | crontab -

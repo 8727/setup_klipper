@@ -6,19 +6,19 @@ set -e
 KIAUH_REPO=https://github.com/th33xitus/kiauh.git
 TELEGRAM_BOT_REPO=https://github.com/nlef/moonraker-telegram-bot
 
-sudo apt update && sudo apt upgrade -y
-sudo apt-get -y install gpiod sendemail libnet-ssleay-perl libio-socket-ssl-perl
+#sudo apt update && sudo apt upgrade -y
+#sudo apt-get -y install gpiod sendemail libnet-ssleay-perl libio-socket-ssl-perl
 
 NEWUSER='klipper'
 
 create_klipper_user(){
-  if [[ $(sud0 cat /etc/passwd | grep 'klipper' | wc -l) -eq 0 ]]; then
+  if [[ $(sudo cat /etc/passwd | grep 'klipper' | wc -l) -eq 0 ]]; then
     sudo adduser ${NEWUSER}
   fi
   sudo usermod -a -G tty ${NEWUSER}
   sudo usermod -a -G dialout ${NEWUSER}
   sudo adduser ${NEWUSER} sudo
-  sudo echo -e "${NEWUSER} ALL=(ALL) NOPASSWD: ALL \n" >> /etc/sudoers
+  #sudo echo -e "${NEWUSER} ALL=(ALL) NOPASSWD: ALL \n" >> /etc/sudoers
 }
 
 update_udev(){
@@ -55,7 +55,7 @@ download_kiauh(){
 }
 
 install_telegram_bot(){
-  cd ~
+  cd  ~
   TBOT_FOLDER=moonraker-telegram-bot
   if [ ! -d "${TBOT_FOLDER}" ] ; then
     git clone ${TELEGRAM_BOT_REPO} ${TBOT_FOLDER}

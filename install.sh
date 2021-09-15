@@ -7,7 +7,7 @@ KIAUH_REPO=https://github.com/th33xitus/kiauh.git
 TELEGRAM_BOT_REPO=https://github.com/nlef/moonraker-telegram-bot
 
 #sudo apt update && sudo apt upgrade -y
-sudo apt-get -y install gpiod sendemail libnet-ssleay-perl libio-socket-ssl-perl
+sudo apt-get install gpiod sendemail libnet-ssleay-perl libio-socket-ssl-perl
 
 NEWUSER='klipper'
 
@@ -68,8 +68,8 @@ install_telegram_bot(){
 }
 
 
-create_klipper_user
-update_udev
+sudo create_klipper_user
+sudo update_udev
 read -p "download kiauh(y/N):" yn
 while true; do
   case "$yn" in

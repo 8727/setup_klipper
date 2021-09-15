@@ -23,4 +23,3 @@ msg='Klipper : '$Klipper' \nMoonraker : '$Moonraker' \nMainsail : '$Mainsail
 # Отправляем письмо
 /usr/bin/sendEmail -f $FROM -t $MAILTO -o message-charset=utf-8 -a /home/$USER/BackUp.zip -u $tema -m $msg -s $SMTPSERVER -o tls=yes -xu $SMTPLOGIN -xp $SMTPPASS
 rm /home/$USER/BackUp.zip		# Удаляем файл backup
-# crontab -e		0 05 * * * /home/$USER/backup_email.sh

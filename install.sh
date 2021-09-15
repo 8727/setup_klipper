@@ -7,12 +7,12 @@ KIAUH_REPO=https://github.com/th33xitus/kiauh.git
 TELEGRAM_BOT_REPO=https://github.com/nlef/moonraker-telegram-bot
 
 #sudo apt update && sudo apt upgrade -y
-#sudo apt-get -y install gpiod sendemail libnet-ssleay-perl libio-socket-ssl-perl
+sudo apt-get -y install gpiod sendemail libnet-ssleay-perl libio-socket-ssl-perl
 
 NEWUSER='klipper'
 
 create_klipper_user(){
-  if [[ $(sudo cat /etc/passwd | grep 'klipper' | wc -l) -eq 0 ]]; then
+  if [[ $(cat /etc/passwd | grep 'klipper' | wc -l) -eq 0 ]]; then
     sudo adduser ${NEWUSER}
   fi
   sudo usermod -a -G tty ${NEWUSER}
@@ -33,7 +33,7 @@ SUBSYSTEM=="gpio*", PROGRAM="/bin/sh -c '\
 EOF
 
   # execute udev rules?!
-  if [[ `sudo cat /etc/group | grep 'gpio' | wc -l` -eq 0 ]]; then
+  if [[ `cat /etc/group | grep 'gpio' | wc -l` -eq 0 ]]; then
     sudo groupadd gpio
   fi
   sudo usermod -a -G gpio ${NEWUSER}
@@ -70,7 +70,27 @@ install_telegram_bot(){
 
 create_klipper_user
 update_udev
-download_kiauh
-install_telegram_bot
+read -p "download kiauh(y/N):" yn
+while true; do
+  case "$yn" in
+  Y|y|Yes|yes)
+    download_kiauh
+  break;;
+  N|n|No|no|"") break;;
+  *) break;;
+  esac
+  done
+
+read -p "Install Telegram Bot kiauh(y/N):" yn
+while true; do
+  case "$yn" in
+  Y|y|Yes|yes)
+    install_telegram_bot
+  break;;
+  N|n|No|no|"") break;;
+  *) break;;
+  esac
+  done
+
 sudo sh /home/klipper/moonraker/scripts/sudo_fix.sh
 echo "0 05 * * * /home/${NEWUSER}/backup_email.sh" | crontab -e

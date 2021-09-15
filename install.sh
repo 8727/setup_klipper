@@ -9,17 +9,17 @@ NEWUSER='klipper'
 
 create_klipper_user(){
 	if [[ $(cat /etc/passwd | grep 'klipper' | wc -l) -eq 0 ]]; then
-	    adduser ${NEWUSER}
+	   sudo adduser ${NEWUSER}
 	fi
-    usermod -a -G tty ${NEWUSER}
-    usermod -a -G dialout ${NEWUSER}
-    adduser ${NEWUSER} sudo
-    echo -e "${NEWUSER} ALL=(ALL) NOPASSWD: ALL \n" >> /etc/sudoers
+   sudo usermod -a -G tty ${NEWUSER}
+   sudo usermod -a -G dialout ${NEWUSER}
+   sudo adduser ${NEWUSER} sudo
+   sudo echo -e "${NEWUSER} ALL=(ALL) NOPASSWD: ALL\n" >> /etc/sudoers
 }
 
 update_udev(){
 
-    /bin/sh -c "cat > /etc/udev/rules.d/99-gpio.rules" <<EOF
+   sudo /bin/sh -c "cat > /etc/udev/rules.d/99-gpio.rules" <<EOF
 # Corrects sys GPIO permissions so non-root users in the gpio group can manipulate bits
 #
 SUBSYSTEM=="gpio", GROUP="gpio", MODE="0660"
@@ -32,11 +32,11 @@ EOF
 
     # execute udev rules?!
     if [[ `cat /etc/group | grep 'gpio' | wc -l` -eq 0 ]]; then
-    	groupadd gpio
+      sudo groupadd gpio
     fi
-    usermod -a -G gpio ${NEWUSER}
-    udevadm control --reload-rules
-    udevadm trigger
+   sudo usermod -a -G gpio ${NEWUSER}
+   sudo udevadm control --reload-rules
+   sudo udevadm trigger
 }
 
 create_klipper_user

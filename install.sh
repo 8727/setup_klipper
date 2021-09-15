@@ -40,7 +40,7 @@ EOF
 create_klipper_user
 update_udev
 
-echo -e '0 05 * * * /home/${NEWUSER}/setup_klipper/backup_email.sh' | crontab -
+echo -e "0 05 * * * /home/${NEWUSER}/setup_klipper/backup_email.sh" | crontab -
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 sudo -Hu ${NEWUSER} ${SCRIPT_DIR}/services.sh

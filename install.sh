@@ -6,19 +6,16 @@ set -e
 KIAUH_REPO=https://github.com/th33xitus/kiauh.git
 TELEGRAM_BOT_REPO=https://github.com/nlef/moonraker-telegram-bot
 
-#sudo apt update && sudo apt upgrade -y
+sudo apt update && sudo apt upgrade -y
 sudo apt-get install gpiod sendemail libnet-ssleay-perl libio-socket-ssl-perl
 
 NEWUSER='klipper'
 
 create_klipper_user(){
-  if [[ $(cat /etc/passwd | grep 'klipper' | wc -l) -eq 0 ]]; then
-    sudo adduser ${NEWUSER}
-  fi
   sudo usermod -a -G tty ${NEWUSER}
   sudo usermod -a -G dialout ${NEWUSER}
   sudo adduser ${NEWUSER} sudo
-  #sudo echo -e "${NEWUSER} ALL=(ALL) NOPASSWD: ALL \n" >> /etc/sudoers
+  sudo echo -e "${NEWUSER} ALL=(ALL) NOPASSWD: ALL \n" >> /etc/sudoers
 }
 
 update_udev(){
@@ -32,10 +29,7 @@ SUBSYSTEM=="gpio*", PROGRAM="/bin/sh -c '\
  chown -R root:gpio /sys$devpath && chmod -R 770 /sys$devpath\'"
 EOF
 
-  # execute udev rules?!
-  if [[ `cat /etc/group | grep 'gpio' | wc -l` -eq 0 ]]; then
-    sudo groupadd gpio
-  fi
+  sudo groupadd gpio
   sudo usermod -a -G gpio ${NEWUSER}
   sudo udevadm control --reload-rules
   sudo udevadm trigger

@@ -14,7 +14,7 @@ create_klipper_user(){
   sudo usermod -a -G tty ${NEWUSER}
   sudo usermod -a -G dialout ${NEWUSER}
   sudo adduser ${NEWUSER} sudo
-  sudo echo -e "${NEWUSER} ALL=(ALL) NOPASSWD: ALL\n" >> /etc/sudoers
+  sudo echo -e '${NEWUSER} ALL=(ALL) NOPASSWD: ALL\n' >> /etc/sudoers
 }
 
 update_udev(){
@@ -40,7 +40,7 @@ EOF
 create_klipper_user
 update_udev
 
-echo -e "0 05 * * * /home/${NEWUSER}/setup_klipper/backup_email.sh" | crontab -
-
+echo -e "0 05 * * * /home/klipper/setup_klipper/backup_email.sh" | crontab -
+clear
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 sudo -Hu ${NEWUSER} ${SCRIPT_DIR}/services.sh

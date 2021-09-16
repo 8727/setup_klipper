@@ -12,8 +12,8 @@ versions(){
 data=`date +%Y.%m.%d`
 tema='3D Printer Klipper Backup Configs '$data
 names='BackUp_'$data'.zip'
-zip -r /home/$USER/$names klipper_config/*	# Делаем бэкап папки
 versions
+zip -r /home/$USER/$names klipper_config/* setup_klipper/* # Делаем бэкап
 echo -e 'Klipper : '$Klipper' \tMoonraker : '$Moonraker' \tMainsail : '$Mainsail
 FROM=sis.8727@gmail.com			# Будет отображаться "От кого"
 MAILTO=5796630@mail.ru			# Кому
